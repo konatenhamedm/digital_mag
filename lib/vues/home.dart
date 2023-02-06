@@ -24,7 +24,8 @@ import 'menu_drawer.dart';
 
 class Home extends StatefulWidget {
   final bool isReload;
-  const Home({Key? key,required this.isReload}) : super(key: key);
+  final int totalRecords;
+  const Home({Key? key,required this.isReload, required this.totalRecords}) : super(key: key);
 
   static const routeName ='/hh';
 
@@ -34,22 +35,33 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   var refreshKey = GlobalKey<RefreshIndicatorState>();
-  Article article = Article.articles[1];
-  final PostsController postsController = Get.put(PostsController());
-  final CategoriesController categoriesController = Get.put(CategoriesController());
   final PostsController c = Get.put(PostsController());
-  final categories = Categorie.categories;
-  List<Article> articles = <Article>[];
+  ScrollController _scrollController = new ScrollController();
+  int _page = 0;
+
   bool _loading = true;
+
   @override
   void initState(){
+
     super.initState();
-    categories;
     getArticles();
+
     Future.delayed(Duration.zero,() async{
 
       if(this.widget.isReload){
         await c.carousselData();
+      }
+      if(widget.isReload){
+        await c.fetchPosts2(pageNumber: 1,totalRecords: widget.totalRecords,);
+      }
+    });
+    _scrollController.addListener(() async{
+      if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
+        await c.fetchPosts2(
+          pageNumber: ++_page,
+          totalRecords: widget.totalRecords,
+        );
       }
     });
 
@@ -59,8 +71,7 @@ class _HomeState extends State<Home> {
   getArticles() async{
     News news = News();
     await news.getArticle();
-    //articles = news.articles;
-    print(articles);
+
     setState(() {
       _loading = false;
     });
@@ -79,9 +90,9 @@ class _HomeState extends State<Home> {
       body: RefreshIndicator(
         key: refreshKey,
         onRefresh: () async{
-          await postsController.fetchPosts2(
+          await c.fetchPosts2(
             pageNumber: 1,
-            totalRecords: postsController.postsList.length,);
+            totalRecords: c.postsList.length,);
 
 
         },
@@ -102,15 +113,20 @@ class _HomeState extends State<Home> {
                           children: [
                             CarrousselSlideData(c.carousselData),
                             const SizedBox(height: 5,),
+                            RecentsArticlesPage(totalRecords: c.postsList.length,),
                           ],
                         );
                       }
 
                     }),
-                    _loading ?  Center(
+
+                   /* Obx((){
+                      return RecentsArticlesPage(isReload: true,totalRecords: c.postsList.length,);
+                    })*/
+                   /* _loading ?  Center(
                       child:  CircularProgressIndicator(),
                     )
-                        :RecentsArticlesPage(isReload: true,totalRecords: postsController.postsList.length,),
+                        :RecentsArticlesPage(isReload: true,totalRecords: c.postsList.length,),*/
                   ],
                 )
             ),

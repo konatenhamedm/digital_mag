@@ -59,8 +59,23 @@ class ApiService{
     }else{
       return null;
     }
+  }
+
+
+
+    static Future<List<NewsModele>?> fetchCaroussel() async {
+      var url =Config.apiUrl.toString() + Config.postUrlCaroussel.toString();
+      var response = await client.get(Uri.parse(url));
+
+      if(response.statusCode == 200){
+        var jsonString = response.body;
+        return postFromJson(jsonString);
+      }else{
+        return null;
+      }
 
     }
+
 
 
     static Future<NewsModele?> fetchDetails(int postId) async{

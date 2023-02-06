@@ -30,7 +30,7 @@ class NavBar extends StatelessWidget {
           child: IconButton(
             onPressed: (){
               Navigator.of(context).push(MaterialPageRoute(
-                builder:(context)=> const Home(isReload: true),
+                builder:(context)=> const Home(isReload: true,totalRecords: 20,),
               ));
               //Navigator.pushNamed(context, Home());
             },

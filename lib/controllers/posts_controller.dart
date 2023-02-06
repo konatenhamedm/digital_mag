@@ -15,11 +15,13 @@ class PostsController extends GetxController{
   @override
   void onInit() {
     // TODO: implement onInit
-    fetchPosts2();
+   // fetchPosts2();
     fetchPosts();
+    fetchCaroussel();
     if(box.read('carousselData') != null) {
       carousselData.assignAll(box.read("carousselData")) ;
     }
+    print(carousselData);
     super.onInit();
   }
   
@@ -59,6 +61,20 @@ class PostsController extends GetxController{
     }
   }
 
+  Future<void> fetchCaroussel() async{
+    try{
+      isLoading(true);
+      var posts = await ApiService.fetchCaroussel();
+      carousselData.clear();
+
+      if(posts != null){
+        carousselData.addAll(posts);
+      }
+    }finally{
+      isLoading(false);
+    }
+  }
+
   Future<void> fetchPosts2({int pageNumber = 0,int totalRecords = 0}) async{
     try{
 
@@ -72,12 +88,13 @@ class PostsController extends GetxController{
 
         if(posts != null){
           postsList.addAll(posts);
+          //carousselData.addAll(posts);
         }
-        print(postsList);
+        //print(postsList);
       }
     }finally{
     isLoading(false);
-     //update(['carousselData']);
+     update(['carousselData']);
      print("dkhkldk");
     }
   }
