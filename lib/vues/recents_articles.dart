@@ -8,9 +8,9 @@ import 'article_categorie_vue.dart';
 
 class RecentsArticlesPage extends StatefulWidget {
   /*final int? categoryId;*/
-  //final bool isReload;
-  final int totalRecords;
-  const RecentsArticlesPage({Key? key, required this.totalRecords}) : super(key: key);
+  final bool isReload;
+
+  const RecentsArticlesPage({Key? key,required this.isReload}) : super(key: key);
 
   @override
   State<RecentsArticlesPage> createState() => _RecentsArticlesPageState();
@@ -28,9 +28,18 @@ class _RecentsArticlesPageState extends State<RecentsArticlesPage> {
     super.initState();
     Future.delayed(Duration.zero,() async{
 
-      /*if(widget.isReload){*/
+      if(widget.isReload){
+        await postsController.articleRecentData().where((element) => element.imageUrl != false);
+      }
+      /* if(widget.isReload){
+        await c.fetchPosts2(pageNumber: 1,totalRecords: widget.totalRecords,);
+      }*/
+    });
+   /* Future.delayed(Duration.zero,() async{
+
+      if(widget.isReload){
         await postsController.fetchPosts(pageNumber: 1,totalRecords: widget.totalRecords,);
-      //}
+      }
     });
     _scrollController.addListener(() async{
       if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
@@ -39,7 +48,7 @@ class _RecentsArticlesPageState extends State<RecentsArticlesPage> {
             totalRecords: widget.totalRecords,
         );
       }
-    });
+    })*/;
 
   }
   @override
@@ -55,57 +64,56 @@ class _RecentsArticlesPageState extends State<RecentsArticlesPage> {
             child: CircularProgressIndicator(),
           );
         } else {
-          return  Container(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              children: [
-                const  SizedBox(height: 5,),
-                Container(
-                  //padding:  const EdgeInsets.symmetric(horizontal: 8),
+          return RefreshIndicator(
+            key: refreshKey,
+            onRefresh: () =>  postsController.fetchArticlerecents(),
 
-                  child: Row(
-                    children: const [
-                      Text(
-                        "Les articles recents ",
-                        style:  TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          color: Colors.purple,
-                          //decoration: TextDecoration.underline,
-                          //decorationStyle: TextDecorationStyle.double,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  const  SizedBox(height: 5,),
+                  Container(
+                    //padding:  const EdgeInsets.symmetric(horizontal: 8),
+
+                    child: Row(
+                      children: const [
+                        Text(
+                          "Les articles recents ",
+                          style:  TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                            color: Colors.purple,
+                            //decoration: TextDecoration.underline,
+                            //decorationStyle: TextDecorationStyle.double,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: ListView.builder(
-                      itemCount: postsController.postsList.length,
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
-                      controller: _scrollController,
-                      itemBuilder: (context,index){
-                        if((index == postsController.postsList.length -1) && postsController.postsList.length < widget.totalRecords){
-                          return  Center(
-                            child: CircularProgressIndicator(),
+                  Container(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: ListView.builder(
+                        itemCount: postsController.articleRecentData.length,
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        itemBuilder: (context,index){
+
+                          return  BlocTileNewsModele(
+                            imageUrl: postsController.articleRecentData[index].imageUrl.toString(),
+                            titre: postsController.articleRecentData[index].title.toString(),
+                            desc: postsController.articleRecentData[index].title.toString(),
+                            url: postsController.articleRecentData[index].imageUrl.toString(),
+                            arg: postsController.articleRecentData[index],
                           );
                         }
-                        return  BlocTileNewsModele(
-                          imageUrl: postsController.postsList[index].imageUrl.toString(),
-                          titre: postsController.postsList[index].title.toString(),
-                          desc: postsController.postsList[index].title.toString(),
-                          url: postsController.postsList[index].imageUrl.toString(),
-                          arg: postsController.postsList[index],
-                        );
-                      }
 
+                    ),
                   ),
-                ),
-              ],
-              // ],
-            ),
-          );
+                ],
+                // ],
+              ),
+            ),);
 
         }
       }

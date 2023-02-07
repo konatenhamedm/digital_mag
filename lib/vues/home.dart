@@ -36,8 +36,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   var refreshKey = GlobalKey<RefreshIndicatorState>();
   final PostsController c = Get.put(PostsController());
-  ScrollController _scrollController = new ScrollController();
-  int _page = 0;
+
 
   bool _loading = true;
 
@@ -49,23 +48,14 @@ class _HomeState extends State<Home> {
 
     Future.delayed(Duration.zero,() async{
 
-      if(this.widget.isReload){
-        await c.carousselData();
-      }
       if(widget.isReload){
-        await c.fetchPosts2(pageNumber: 1,totalRecords: widget.totalRecords,);
+        await c.carousselData();
+        await c.articleRecentData();
       }
-    });
-    _scrollController.addListener(() async{
-      if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
-        await c.fetchPosts2(
-          pageNumber: ++_page,
-          totalRecords: widget.totalRecords,
-        );
-      }
+
+
     });
 
-    // print(categories);
   }
 
   getArticles() async{
@@ -80,6 +70,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       drawer:const MenuDrawer(),
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -87,52 +78,56 @@ class _HomeState extends State<Home> {
        title: const Center(child: Text("Digital mag",style: TextStyle(color: Colors.white),),),
       ),
       extendBodyBehindAppBar: true,
-      body: RefreshIndicator(
+      body:  RefreshIndicator(
         key: refreshKey,
-        onRefresh: () async{
-          await c.fetchPosts2(
-            pageNumber: 1,
-            totalRecords: c.postsList.length,);
-
-
-        },
+        onRefresh: () =>  c.fetchArticlerecents(),
         child: SingleChildScrollView(
-            child: SafeArea(
-                left: false,
-                top: true,
-                bottom: true,
-                right: false,
-                child: Column(
-                  children: [
-                    Obx((){
-                      if(c.isLoading.value){
-                        return const CarrousselLoading();
-                      }else{
+              child: SafeArea(
+                  left: false,
+                  top: true,
+                  bottom: true,
+                  right: false,
+                  child: Column(
+                    children: [
+                      Obx((){
+                        if(c.isLoading.value){
+                          return const CarrousselLoading();
+                        }else{
 
-                        return Column(
-                          children: [
-                            CarrousselSlideData(c.carousselData),
-                            const SizedBox(height: 5,),
-                            RecentsArticlesPage(totalRecords: c.postsList.length,),
-                          ],
-                        );
-                      }
+                          return Column(
+                            children: [
+                              CarrousselSlideData(c.carousselData),
+                              const SizedBox(height: 5,),
+                              /*if(_loading)  Center(
+                                child: Container(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              )
+                                  :
+                              RecentsArticlesPage(totalRecords: c.postsList.length,),*/
+                            ],
+                          );
+                        }
 
-                    }),
+                      }),
+                      _loading ?  Center(
+                        child:  CircularProgressIndicator(),
+                      )
+                          :RecentsArticlesPage(isReload: true,)
+                     /* Obx((){
+                        return RecentsArticlesPage(isReload: true,totalRecords: c.postsList.length,);
+                      })*/
+                     /* _loading ?  Center(
+                        child:  CircularProgressIndicator(),
+                      )
+                          :RecentsArticlesPage(isReload: true,totalRecords: c.postsList.length,),*/
+                    ],
+                  )
+              ),
 
-                   /* Obx((){
-                      return RecentsArticlesPage(isReload: true,totalRecords: c.postsList.length,);
-                    })*/
-                   /* _loading ?  Center(
-                      child:  CircularProgressIndicator(),
-                    )
-                        :RecentsArticlesPage(isReload: true,totalRecords: c.postsList.length,),*/
-                  ],
-                )
-            ),
-
-        ),
+          ),
       ),
+      // ),
     );
   }
 }

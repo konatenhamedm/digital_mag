@@ -3,7 +3,11 @@ import 'package:digital_mag/vues/love_article.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:digital_mag/vues/userProfile.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:share/share.dart';
+import '../controllers/posts_controller.dart';
+import '../modeles/news_modele.dart';
 import 'ecrans_export.dart';
 
 class MenuDrawer extends StatefulWidget {
@@ -15,6 +19,25 @@ class MenuDrawer extends StatefulWidget {
 
 class _MenuDrawerState extends State<MenuDrawer> {
   final padding = EdgeInsets.symmetric(horizontal: 20);
+  final PostsController postsController = Get.put(PostsController());
+  List<NewsModele> article = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration.zero,() async{
+
+     /* if(this.widget.isReload){*/
+
+       final  article =  await postsController.carousselData();
+      //}
+      /* if(widget.isReload){
+        await c.fetchPosts2(pageNumber: 1,totalRecords: widget.totalRecords,);
+      }*/
+      print(article.length);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final nom= "Konate";
@@ -172,12 +195,12 @@ void selectedItem(BuildContext context, int index){
           arguments: 48,
         );*/
     Navigator.of(context).push(MaterialPageRoute(
-          builder:(context)=> const ArticlesParCategorie(isReload: true, categorieId: 48),
+          builder:(context)=> const ArticlesParCategorie(isReload: true, categorieId: 4,),
         ));
         break;
       case 5:
         Navigator.of(context).push(MaterialPageRoute(
-          builder:(context)=> const ArticlesParCategorie(isReload: true, categorieId: 2723),
+          builder:(context)=> const ArticlesParCategorie(isReload: true, categorieId: 17),
         ));
         break;
       case 9:

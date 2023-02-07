@@ -18,7 +18,7 @@ class _NewsPageState extends State<NewsPage> {
 
   final PostsController postsController = Get.put(PostsController());
  var refreshKey = GlobalKey<RefreshIndicatorState>();
-  ScrollController _scrollController = new ScrollController();
+  final ScrollController _scrollController = new ScrollController();
  int _page = 0;
  @override
   void initState() {
@@ -49,6 +49,7 @@ class _NewsPageState extends State<NewsPage> {
 
   Widget newsList(){
     return Container(
+
       child: Obx(() {
         if(postsController.isLoading.value) {
           return  const Center(
@@ -69,15 +70,15 @@ class _NewsPageState extends State<NewsPage> {
           },
             child: ListView.builder(
                 physics: const AlwaysScrollableScrollPhysics(),
-                itemCount: postsController.postsList.length,
+                itemCount: postsController.loveListe.length,
                 controller: _scrollController,
                 itemBuilder: (context ,index){
-                  if((index == postsController.postsList.length -1) && postsController.postsList.length < widget.totalRecords){
-                    return  Center(
+                  if((index == postsController.loveListe.length -1) && postsController.loveListe.length < widget.totalRecords){
+                    return  const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
-                  return CardWidget(modele: postsController.postsList[index]);
+                  return CardWidget(modele: postsController.loveListe[index]);
                 }
 
             ),);

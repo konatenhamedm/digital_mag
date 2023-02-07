@@ -46,6 +46,7 @@ class _CarrousselSlideDataState extends State<CarrousselSlideData> {
                 progressIndicatorBuilder: (context,url,downloadProgress)=>
                  Center(
                    child: CircularProgressIndicator(
+
                      value: downloadProgress.progress,
                    ),
                  ),

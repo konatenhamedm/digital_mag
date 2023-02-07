@@ -33,7 +33,7 @@ class _ArticlesParCategorieState extends State<ArticlesParCategorie> {
     Future.delayed(Duration.zero,() async{
 
       if(this.widget.isReload){
-        await postsController.fetchPosts(categoryId: widget.categorieId);
+        await postsController.fetchCategorieByArticle(categoryId: widget.categorieId);
       }
     });
     //print(postsController.postsList.length);
@@ -52,6 +52,7 @@ class _ArticlesParCategorieState extends State<ArticlesParCategorie> {
     /*final idCategorie = ModalRoute.of(context)!.settings.arguments as int;*/
     return Scaffold(
       //drawer:const MenuDrawer(),
+      backgroundColor: Colors.grey,
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.black,
@@ -87,7 +88,7 @@ class _ArticlesParCategorieState extends State<ArticlesParCategorie> {
           Future.delayed(Duration.zero,() async{
 
             if(this.widget.isReload){
-              await postsController.fetchPosts(categoryId: widget.categorieId);
+              await postsController.fetchCategorieByArticle(categoryId: widget.categorieId);
             }
           });
         },
@@ -101,6 +102,7 @@ class _ArticlesParCategorieState extends State<ArticlesParCategorie> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
+
                 children: [
                   const  SizedBox(height: 12,),
                   Container(

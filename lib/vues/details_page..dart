@@ -5,6 +5,7 @@ import 'package:flutter_html/flutter_html.dart';
 //import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_icons_null_safety/flutter_icons_null_safety.dart';
 import 'package:digital_mag/utils/layout.dart';
+import 'package:share/share.dart';
 
 import '../modeles/article.dart';
 
@@ -17,6 +18,8 @@ class DetailsPage extends StatelessWidget {
     final article = ModalRoute.of(context)!.settings.arguments as NewsModele;
     return Scaffold(
       body: CustomScrollView(
+        physics: const BouncingScrollPhysics()
+        ,
         slivers: [
           SliverAppBar(
             flexibleSpace: FlexibleSpaceBar(
@@ -28,6 +31,7 @@ class DetailsPage extends StatelessWidget {
               expandedHeight: 250,
           ),
           SliverFillRemaining(
+            hasScrollBody:false,
             child: newsDetailsSections(article),
           )
         ],
@@ -36,8 +40,7 @@ class DetailsPage extends StatelessWidget {
   }
 
   Widget newsDetailsSections(NewsModele article){
-    return SingleChildScrollView(
-      child: Container(
+    return Container(
         padding: const EdgeInsets.all(15),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -46,8 +49,8 @@ class DetailsPage extends StatelessWidget {
             Row1(article),
             Layout.iconText(const Icon(Icons.timer),Text(article.postedDate.toString())),
              const SizedBox(height: 15,),
-            const Text(
-              "Ecrit par konate",style: TextStyle(
+             Text(
+              article.auteur.toString(),style: const TextStyle(
               fontSize: 16,
               color: Colors.grey,
               fontWeight: FontWeight.bold,
@@ -63,8 +66,8 @@ class DetailsPage extends StatelessWidget {
             )
           ],
         ),
-      ),
-    );
+      );
+   // );
   }
 
   Widget Row1(NewsModele article){
@@ -99,7 +102,7 @@ class DetailsPage extends StatelessWidget {
 
               ),
               IconButton(onPressed: (){
-                print('kks');
+                Share.share(article.url.toString());
               }, icon: const Icon(Icons.share)
               ),
               IconButton(

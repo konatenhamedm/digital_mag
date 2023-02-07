@@ -44,6 +44,7 @@ class _LoveArticleState extends State<LoveArticle> {
         return DefaultTabController(
         length: categoriesController.categoriesList.length,
         child: Scaffold(
+          backgroundColor: Colors.grey,
           appBar: AppBar(
             backgroundColor: Colors.black,
 

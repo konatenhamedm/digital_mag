@@ -37,7 +37,7 @@ class ApiService{
     }
 
   static Future<List<NewsModele>?> fetchArticleParCategorie(int categoryId) async {
-    var url =Config.apiUrl.toString() + Config.postUrl.toString()+categoryId.toString()+categoryId.toString();
+    var url =Config.apiUrl.toString() + Config.postUrl.toString()+categoryId.toString();
     var response = await client.get(Uri.parse(url));
 
     if(response.statusCode == 200){
@@ -46,11 +46,10 @@ class ApiService{
     }else{
       return null;
     }
-
-
   }
+
   static Future<List<NewsModele>?> fetchPosts2(int pageNumber) async {
-    var url =Config.apiUrl.toString() + Config.postUrl2.toString() + "&page_no=" + pageNumber.toString();
+    var url =Config.apiUrl.toString() + Config.postUrl.toString() + "&page_no=" + pageNumber.toString();
     var response = await client.get(Uri.parse(url));
 
     if(response.statusCode == 200){
@@ -75,6 +74,19 @@ class ApiService{
       }
 
     }
+
+  static Future<List<NewsModele>?> fetchArticlerecents() async {
+    var url =Config.apiUrl.toString() + Config.postUrlRecents.toString();
+    var response = await client.get(Uri.parse(url));
+
+    if(response.statusCode == 200){
+      var jsonString = response.body;
+      return postFromJson(jsonString);
+    }else{
+      return null;
+    }
+
+  }
 
 
 

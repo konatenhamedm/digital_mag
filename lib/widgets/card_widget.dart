@@ -21,7 +21,10 @@ class CardWidget extends StatelessWidget {
       ),
       child: InkWell(
         onTap: (){
-          Navigator.push(context,MaterialPageRoute(builder: (context)=>DetailsPage()));
+          Navigator.pushNamed(context,
+            DetailsPage.routeName,
+            arguments: modele,
+          );
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
