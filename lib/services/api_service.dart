@@ -23,7 +23,7 @@ class ApiService{
       int categoryId,
       int pageNumber,
       ) async {
-    var url =Config.apiUrl.toString() + Config.postUrl.toString()+categoryId.toString() + "&page_no=" + pageNumber.toString();
+    var url ="${Config.apiUrl}${Config.postUrl}$categoryId&page_no=$pageNumber";
     var response = await client.get(Uri.parse(url));
 
     if(response.statusCode == 200){
@@ -95,14 +95,24 @@ class ApiService{
       var response = await client.get(Uri.parse(url));
 
       if(response.statusCode == 200){
-        var jsonString = response.body;
-        return postDetailsFrom(jsonString);
-      }else{
-        return null;
+        var jsonString = response.body ;
+        //print(fromJsonToDetail(jsonString));
+        return fromJsonToDetail(jsonString);
+
+
       }
+        return null;
 
 
     }
+
+  static Future<NewsModele> fetchInfo(int postId) async{
+    var url =Config.apiUrl.toString() + Config.postDetailUrl + postId.toString();
+    var response = await client.get(Uri.parse(url));
+    final jsonresponse = json.decode(response.body);
+
+    return NewsModele.fromJson(jsonresponse[0]);
+  }
 
 
 

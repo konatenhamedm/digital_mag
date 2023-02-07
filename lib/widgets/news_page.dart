@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:digital_mag/controllers/posts_controller.dart';
 import 'package:digital_mag/widgets/card_widget.dart';
 
+import '../modeles/news_modele.dart';
+
 class NewsPage extends StatefulWidget {
   final int? categoryId;
   final bool isReload;
@@ -27,8 +29,11 @@ class _NewsPageState extends State<NewsPage> {
     Future.delayed(Duration.zero,() async{
 
       if(widget.isReload){
-        await postsController.fetchPosts(categoryId: widget.categoryId,pageNumber: 1,totalRecords: widget.totalRecords,);
+       var article = await postsController.fetchPosts(categoryId: widget.categoryId,pageNumber: 1,totalRecords: widget.totalRecords,);
+
+      // print(article);
       }
+
     });
     _scrollController.addListener(() async{
       if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){

@@ -49,6 +49,8 @@ dependencies:
   get_storage:
   flutter_html: ^0.8.2
 
+  #flutter_tts: ^3.6.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

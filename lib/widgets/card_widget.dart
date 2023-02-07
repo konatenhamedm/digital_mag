@@ -1,6 +1,10 @@
+import 'package:digital_mag/vues/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:digital_mag/modeles/news_modele.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:share/share.dart';
 
 import '../utils/layout.dart';
 import '../vues/details_page..dart';
@@ -21,10 +25,14 @@ class CardWidget extends StatelessWidget {
       ),
       child: InkWell(
         onTap: (){
-          Navigator.pushNamed(context,
-            DetailsPage.routeName,
+          /*Navigator.pushNamed(context,
+            Texte.routeName,
             arguments: modele,
-          );
+          );*/
+        //  Get.to(() => Texte(),arguments:0 );
+          Get.to(Texte(category_id: modele.id,));
+          print("LEOOOOOOOO");
+          print(modele.id);
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -35,7 +43,7 @@ class CardWidget extends StatelessWidget {
                   ClipRRect(
                     borderRadius: const BorderRadius.only(topLeft: Radius.circular(16.0),
                         topRight: Radius.circular(16.0)),
-                    child: Image.network(modele.imageUrl.toString()),
+                    child: Image.network(modele.imageUrl.toString() ),
                   ),
                   Align(
                     alignment: Alignment.topRight,
@@ -53,7 +61,7 @@ class CardWidget extends StatelessWidget {
                         fontWeight: FontWeight.bold
                       ),),
                     ),
-                  )
+                  ),
                 ],
               ),
             Padding(
@@ -77,11 +85,28 @@ class CardWidget extends StatelessWidget {
                         style: const TextStyle(
                         fontSize: 14,color: Colors.black
                       ),)),
-                      GestureDetector(
-                        onTap: (){
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>DetailsPage()));
-                        },
-                        child: const Icon(Icons.favorite_border),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: (){
+                              Share.share(modele.url.toString());
+
+                              //Navigator.push(context,MaterialPageRoute(builder: (context)=>Texte()));
+                              //Get.to(Texte(),arguments: 7724);
+                            },
+                            child: const Icon(Icons.share),
+                          ),
+                          const SizedBox(width: 8,),
+                          GestureDetector(
+                            onTap: (){
+                              Share.share(modele.url.toString());
+
+                              //Navigator.push(context,MaterialPageRoute(builder: (context)=>Texte()));
+                              //Get.to(Texte(),arguments: 7724);
+                            },
+                            child: const Icon(Icons.book_rounded),
+                          )
+                        ],
                       )
                     ],
                   ),

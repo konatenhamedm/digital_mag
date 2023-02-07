@@ -1,5 +1,6 @@
 import 'package:digital_mag/vues/articles_par_categorie.dart';
 import 'package:digital_mag/vues/love_article.dart';
+import 'package:digital_mag/vues/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:digital_mag/vues/userProfile.dart';
@@ -91,7 +92,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
               onClicked: ()=>selectedItem(context,4),
             ),
             buildMenuItem(
-              text:"Decryptages",//11
+              text:"Decryptage",//11
               icon:Icons.network_cell,
               onClicked: ()=>selectedItem(context,5),
             ),
@@ -195,12 +196,18 @@ void selectedItem(BuildContext context, int index){
           arguments: 48,
         );*/
     Navigator.of(context).push(MaterialPageRoute(
-          builder:(context)=> const ArticlesParCategorie(isReload: true, categorieId: 4,),
+          builder:(context)=>  const ArticlesParcategorie(isReload: true, categoryId: 4, totalRecords: 200,),
         ));
         break;
       case 5:
         Navigator.of(context).push(MaterialPageRoute(
-          builder:(context)=> const ArticlesParCategorie(isReload: true, categorieId: 17),
+          builder:(context)=> const ArticlesParcategorie(isReload: true, categoryId: 11, totalRecords: 200,),
+        ));
+        break;
+
+      case 5:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder:(context)=> const ArticlesParcategorie(isReload: true, categoryId: 12, totalRecords: 200,),
         ));
         break;
       case 9:

@@ -18,7 +18,7 @@ class PostsController extends GetxController{
   void onInit() {
     // TODO: implement onInit
    // fetchPosts2();
-    //fetchPosts();
+    fetchPosts();
     fetchCaroussel();
     fetchArticlerecents();
     fetchCategorieByArticle();
@@ -32,11 +32,12 @@ class PostsController extends GetxController{
   
   Future<void> fetchPosts({int? categoryId = 4,int pageNumber = 0,int totalRecords = 0}) async{
     try{
-     // isLoading(true);
-      if(loveListe.isEmpty || pageNumber == 0){
-        isLoading(true);
+     isLoading(true);
+     loveListe.clear();
+      /*if(loveListe.length == 0 || pageNumber == 0){
+       isLoading(true);
         loveListe.clear();
-      }
+      }*/
       if(loveListe.length < totalRecords){
         var posts = await ApiService.fetchPosts(categoryId!,pageNumber);
 
@@ -44,7 +45,7 @@ class PostsController extends GetxController{
         if(posts != null){
           loveListe.addAll(posts);
         }
-        print(postsList);
+       // print(postsList);
       }
 
     }finally{

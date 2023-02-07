@@ -37,7 +37,7 @@ class _LoveArticleState extends State<LoveArticle> {
     return Container(color: Colors.grey,
     child: Obx((){
       if(categoriesController.isLoading.value) {
-        return  const Center(
+        return  Center(
           child: CircularProgressIndicator(),
         );
       } else {

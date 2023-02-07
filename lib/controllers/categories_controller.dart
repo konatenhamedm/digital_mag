@@ -4,7 +4,7 @@ import 'package:digital_mag/modeles/categore_modele.dart';
 import 'package:digital_mag/services/api_service.dart';
 
 class CategoriesController extends GetxController{
-  var isLoading= true.obs;
+  var isLoading = true.obs;
   var categoriesList = <CategorieModele>[].obs;
 
   @override
