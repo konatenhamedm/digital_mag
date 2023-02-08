@@ -5,6 +5,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:digital_mag/modeles/news_modele.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 
 import '../modeles/article.dart';
@@ -30,17 +32,19 @@ class _CarrousselSlideDataState extends State<CarrousselSlideData> {
       margin: EdgeInsets.all(10),
       child: GestureDetector(
         onTap: (){
-          Navigator.pushNamed(context,
+          /*Navigator.pushNamed(context,
             DetailsPage.routeName,
             arguments: e,
-          );
+          );*/
+          Get.to(DetailsPage(category_id: e.id,));
         },
         child: ClipRRect(
 
           borderRadius: BorderRadius.all(Radius.circular(10)),
           child: Stack(
             children: [
-              CachedNetworkImage(imageUrl: e.imageUrl.toString(),
+              CachedNetworkImage(imageUrl: e.imageUrlBool !=null && e.imageUrlBool == false ?
+              e.imageUrl.toString() : "https://lataule.com/wp-content/uploads/2017/11/fond-gris-moyen.jpg",
               errorWidget: (context ,url,error)=>
                 const Icon(Icons.error),
                 progressIndicatorBuilder: (context,url,downloadProgress)=>
@@ -98,8 +102,8 @@ class _CarrousselSlideDataState extends State<CarrousselSlideData> {
                                  color: Colors.grey,
                                  borderRadius: BorderRadius.circular(15)
                              ),
-                             child: const Text("Ecrit par : K hamed"
-                               ,style:  TextStyle(
+                             child:  Text("Ecrit par : ${e.auteur.toString()}"
+                               ,style:  const TextStyle(
                                  color: Colors.white,
                                  fontSize: 5,
 

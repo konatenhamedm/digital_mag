@@ -30,7 +30,7 @@ class CardWidget extends StatelessWidget {
             arguments: modele,
           );*/
         //  Get.to(() => Texte(),arguments:0 );
-          Get.to(Texte(category_id: modele.id,));
+          Get.to(DetailsPage(category_id: modele.id,));
           print("LEOOOOOOOO");
           print(modele.id);
         },
@@ -43,7 +43,10 @@ class CardWidget extends StatelessWidget {
                   ClipRRect(
                     borderRadius: const BorderRadius.only(topLeft: Radius.circular(16.0),
                         topRight: Radius.circular(16.0)),
-                    child: Image.network(modele.imageUrl.toString() ),
+                    child: Image.network(
+                        modele.imageUrlBool !=null && modele.imageUrlBool == false ?
+                        modele.imageUrl.toString() : "https://lataule.com/wp-content/uploads/2017/11/fond-gris-moyen.jpg"
+                         ,fit: BoxFit.cover,),
                   ),
                   Align(
                     alignment: Alignment.topRight,

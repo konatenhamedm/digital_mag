@@ -5,10 +5,10 @@ import 'package:intl/intl.dart';
 
 List<NewsModele> postFromJson(String str)=>
     List<NewsModele>.from(
-  json.decode(str).map(
-        (x)=>NewsModele.fromJson(x),
-  ),
-);
+      json.decode(str).map(
+            (x)=>NewsModele.fromJson(x),
+      ),
+    );
 
 
 NewsModele fromJsonToDetail(String str) => NewsModele.fromJson(json.decode(str));
@@ -18,7 +18,7 @@ class NewsModele {
   int? id;
   String? title;
   String? imageUrl;
-  bool? imageUrlBool;
+  bool? imageUrlBool=false;
   String? postedDate;
   int? categoryId;
   String? categoryName;
@@ -50,14 +50,14 @@ class NewsModele {
         auteur : addjson['auteur'],
         url : addjson['link'],
         postedDate : DateFormat("dd-MMM-yyyy").format(
-        DateTime.parse(
-            addjson['post_date']
-        )
-    ),
-    categoryId : addjson['category_id'],
-   // if(addjson['post_content'] != null){
-      postContent : addjson['post_content']
-   // }
+            DateTime.parse(
+                addjson['post_date']
+            )
+        ),
+        categoryId : addjson['category_id'],
+        // if(addjson['post_content'] != null){
+        postContent : addjson['post_content']
+      // }
     );
   }
 
@@ -67,16 +67,17 @@ class NewsModele {
     auteur= json['auteur'];
     url= json['link'];
     if(json['image_url'] == false ) {
-      imageUrlBool = json['image_url'];
+      imageUrlBool = true;
     }
     else {
       imageUrl = json['image_url'];
+      imageUrlBool = false;
     }
 
     postedDate= DateFormat("dd-MMM-yyyy").format(
-      DateTime.parse(
-        json['post_date']
-      )
+        DateTime.parse(
+            json['post_date']
+        )
     );
     categoryId = json['category_id'];
     categoryName= json['category_name'];

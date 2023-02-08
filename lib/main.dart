@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         HomeRoute.routeName: (context)=> const HomeRoute(),
         ArticleCategorieVue.routeName: (context)=> const ArticleCategorieVue(),
         ArticleVues.routeName: (context)=> const ArticleVues(),
-        DetailsPage.routeName: (context)=> const DetailsPage(),
+       // DetailsPage.routeName: (context)=> const DetailsPage(),
        //Texte.routeName: (context)=>  Texte(isReload: true,),
         DiscoverRoute.routeName: (context)=> const DiscoverRoute(),
         Splash.routeName: (context)=> const Splash(),

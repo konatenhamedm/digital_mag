@@ -29,13 +29,13 @@ class _RecentsArticlesPageState extends State<RecentsArticlesPage> {
     Future.delayed(Duration.zero,() async{
 
       if(widget.isReload){
-        await postsController.articleRecentData().where((element) => element.imageUrl != false);
+        await postsController.articleRecentData();
       }
       /* if(widget.isReload){
         await c.fetchPosts2(pageNumber: 1,totalRecords: widget.totalRecords,);
       }*/
     });
-   /* Future.delayed(Duration.zero,() async{
+    /* Future.delayed(Duration.zero,() async{
 
       if(widget.isReload){
         await postsController.fetchPosts(pageNumber: 1,totalRecords: widget.totalRecords,);
@@ -100,7 +100,8 @@ class _RecentsArticlesPageState extends State<RecentsArticlesPage> {
                         itemBuilder: (context,index){
 
                           return  BlocTileNewsModele(
-                            imageUrl: postsController.articleRecentData[index].imageUrl.toString(),
+                            imageUrl:  postsController.articleRecentData[index].imageUrlBool !=null && postsController.articleRecentData[index].imageUrlBool == false ?
+                            postsController.articleRecentData[index].imageUrl.toString() : "https://lataule.com/wp-content/uploads/2017/11/fond-gris-moyen.jpg",
                             titre: postsController.articleRecentData[index].title.toString(),
                             desc: postsController.articleRecentData[index].title.toString(),
                             url: postsController.articleRecentData[index].imageUrl.toString(),

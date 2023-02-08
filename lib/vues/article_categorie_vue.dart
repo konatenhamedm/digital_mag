@@ -7,6 +7,8 @@ import 'package:digital_mag/modeles/article.dart';
 import 'package:digital_mag/modeles/categorie.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:digital_mag/vues/article_vue.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:share/share.dart';
 
 import '../helper/data.dart';
@@ -25,7 +27,7 @@ class ArticleCategorieVue extends StatefulWidget {
 
 class _ArticleCategorieVueState extends State<ArticleCategorieVue> {
   final categories = Categorie.categories;
-   List<Article> articles = <Article>[];
+  List<Article> articles = <Article>[];
   bool _loading = true;
   @override
   void initState(){
@@ -91,25 +93,25 @@ class _ArticleCategorieVueState extends State<ArticleCategorieVue> {
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-             const  SizedBox(height: 12,),
-                Container(
-                 //padding:  const EdgeInsets.symmetric(horizontal: 8),
+              const  SizedBox(height: 12,),
+              Container(
+                //padding:  const EdgeInsets.symmetric(horizontal: 8),
 
-                  child: Row(
-                    children: const [
-                        Text(
-                        "ACTUALITE IT: ",
-                        style:  TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          color: Colors.purple,
-                          decoration: TextDecoration.underline,
-                          decorationStyle: TextDecorationStyle.double,
-                        ),
+                child: Row(
+                  children: const [
+                    Text(
+                      "ACTUALITE IT: ",
+                      style:  TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                        color: Colors.purple,
+                        decoration: TextDecoration.underline,
+                        decorationStyle: TextDecorationStyle.double,
                       ),
-                    ],
+                    ),
+                  ],
                 ),
-                  ),
+              ),
               Container(
                 padding: const EdgeInsets.only(top: 10),
                 child: ListView.builder(
@@ -118,11 +120,11 @@ class _ArticleCategorieVueState extends State<ArticleCategorieVue> {
                     physics: const ClampingScrollPhysics(),
                     itemBuilder: (context,index){
                       return  BlocTile(
-                      imageUrl: articles[index].imageUrl.toString(),
-                      titre: articles[index].titre.toString(),
-                      desc: articles[index].desc.toString(),
-                      url: articles[index].url.toString(),
-                      arg: articles[index],
+                        imageUrl: articles[index].imageUrl.toString(),
+                        titre: articles[index].titre.toString(),
+                        desc: articles[index].desc.toString(),
+                        url: articles[index].url.toString(),
+                        arg: articles[index],
                       );
                     }
 
@@ -146,29 +148,29 @@ class CategorieTile extends StatelessWidget{
 
       },
       child: Container(
-        margin: const EdgeInsets.only(right: 10),
-        child: Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(6),
-              child: CachedNetworkImage(imageUrl: imageUrl,width: 120,height: 60,
-                fit: BoxFit.cover,
-              ),
-            ),
-            Container(
-              alignment: Alignment.center,
-              width: 120,height: 60,
-              decoration: BoxDecoration(
+          margin: const EdgeInsets.only(right: 10),
+          child: Stack(
+            children: [
+              ClipRRect(
                 borderRadius: BorderRadius.circular(6),
-                color: Colors.black26,
+                child: CachedNetworkImage(imageUrl: imageUrl,width: 120,height: 60,
+                  fit: BoxFit.cover,
+                ),
               ),
-              child: Text(categorieName,style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500),),
-            ),
-          ],
-        )
+              Container(
+                alignment: Alignment.center,
+                width: 120,height: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color: Colors.black26,
+                ),
+                child: Text(categorieName,style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),),
+              ),
+            ],
+          )
       ),
     );
   }
@@ -178,39 +180,39 @@ class BlocTile extends StatelessWidget{
 
   final String imageUrl,titre,desc,url;
   final  Article arg;
-   BlocTile({Key? key, required this.imageUrl,required this.titre,required this.desc,required this.url,required this.arg}) : super(key: key);
+  BlocTile({Key? key, required this.imageUrl,required this.titre,required this.desc,required this.url,required this.arg}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-   return GestureDetector(
-     onTap: (){
-       Navigator.pushNamed(context,
-         ArticleVues.routeName,
-         arguments: arg,
-       );
-     ///Navigator.push();
-         //builder: (context)=>ArticleVues(blocUrl: url)));
-     },
-     child: Container(
-       margin: const EdgeInsets.only(bottom: 16),
-      child: Column(
-        children: [
-          ClipRRect(
-              borderRadius: BorderRadius.circular(6),
-              child: Image.network(imageUrl)),
-          const SizedBox(height: 8,),
-          Text(titre,style: const TextStyle(
-            fontSize: 18,
-            color: Colors.black87,
-            fontWeight: FontWeight.w500
-          ),),
-          const SizedBox(height: 8,),
-          Text(desc,style: const TextStyle(
+    return GestureDetector(
+      onTap: (){
+        Navigator.pushNamed(context,
+          ArticleVues.routeName,
+          arguments: arg,
+        );
+        ///Navigator.push();
+        //builder: (context)=>ArticleVues(blocUrl: url)));
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 16),
+        child: Column(
+          children: [
+            ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: Image.network(imageUrl)),
+            const SizedBox(height: 8,),
+            Text(titre,style: const TextStyle(
+                fontSize: 18,
+                color: Colors.black87,
+                fontWeight: FontWeight.w500
+            ),),
+            const SizedBox(height: 8,),
+            Text(desc,style: const TextStyle(
               color: Colors.black54,
-          )),
-        ],
+            )),
+          ],
+        ),
       ),
-     ),
-   );
+    );
   }
 
 }
@@ -224,10 +226,11 @@ class BlocTileNewsModele extends StatelessWidget{
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context,
+        /*Navigator.pushNamed(context,
           DetailsPage.routeName,
           arguments: arg,
-        );
+        );*/
+        Get.to(DetailsPage(category_id: arg.id,));
         print("hello konate");
         ///Navigator.push();
         //builder: (context)=>ArticleVues(blocUrl: url)));
@@ -249,7 +252,20 @@ class BlocTileNewsModele extends StatelessWidget{
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Ecrit par : k Hamed"),
+                Row(
+
+                  children: [
+                    Text("${arg.auteur.toString()}",style: const TextStyle(
+                        fontSize: 12,
+
+                    ),),
+                  const SizedBox(width: 8,),
+                  const  Icon(Icons.timer),Text(arg.postedDate.toString(),style: const TextStyle(
+                      fontSize: 12,
+
+                    )),
+                  ],
+                ),
                 SizedBox(width: 8,),
                 Column(
                   children: [
@@ -258,13 +274,9 @@ class BlocTileNewsModele extends StatelessWidget{
                         IconButton(
                           icon: const Icon(Icons.share_outlined),
                           onPressed: (){
-                            Share.share("gggg");
+                            Share.share(arg.url.toString());
                           },            ),
-                        IconButton(
-                          icon: const Icon(Icons.favorite_border),
-                          onPressed: (){
-                            // Share.share("gggg");
-                          },            ),
+
                         IconButton(
                           icon: const Icon(Icons.book_rounded),
                           onPressed: (){
