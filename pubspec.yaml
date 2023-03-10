@@ -48,6 +48,10 @@ dependencies:
   carousel_slider: ^4.2.1
   get_storage:
   flutter_html: ^0.8.2
+  snippet_coder_utils: ^1.0.13
+  shared_preferences: ^2.0.18
+  dio: ^5.0.1
+
 
   #flutter_tts: ^3.6.3
 
@@ -79,6 +83,7 @@ flutter:
      - assets/images/1.jpg
      - assets/images/spl.png
      - assets/images/11.jpg
+     - assets/images/logo_mobile.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

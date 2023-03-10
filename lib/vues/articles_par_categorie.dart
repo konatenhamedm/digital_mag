@@ -73,7 +73,7 @@ class _ArticlesParcategorieState extends State<ArticlesParcategorie> {
                   IconButton(
                     icon: const Icon(Icons.share_outlined),
                     onPressed: (){
-                      Share.share("gggg");
+                      Share.share("https://www.digital-mag.ci/");
                     },            ),
 
                 ],

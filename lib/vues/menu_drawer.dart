@@ -1,4 +1,7 @@
+import 'package:digital_mag/controllers/user_login_controller.dart';
 import 'package:digital_mag/vues/articles_par_categorie.dart';
+import 'package:digital_mag/vues/formulaires/login.dart';
+import 'package:digital_mag/vues/formulaires/newsletter.dart';
 import 'package:digital_mag/vues/love_article.dart';
 import 'package:digital_mag/vues/text.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,6 +12,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:share/share.dart';
 import '../controllers/posts_controller.dart';
 import '../modeles/news_modele.dart';
+import '../services/share_service.dart';
 import 'ecrans_export.dart';
 
 class MenuDrawer extends StatefulWidget {
@@ -20,23 +24,24 @@ class MenuDrawer extends StatefulWidget {
 
 class _MenuDrawerState extends State<MenuDrawer> {
   final padding = EdgeInsets.symmetric(horizontal: 20);
-  final PostsController postsController = Get.put(PostsController());
+  final UserLoginController userLoginController = Get.put(UserLoginController());
+  final PostsController c = Get.put(PostsController());
   List<NewsModele> article = [];
+  var _result;
   @override
   void initState() {
+    getArticles();
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration.zero,() async{
+print(" DRAWWWWWW ${userLoginController.isTrue.value}");
+  }
 
-     /* if(this.widget.isReload){*/
+  getArticles() async{
 
-       final  article =  await postsController.carousselData();
-      //}
-      /* if(widget.isReload){
-        await c.fetchPosts2(pageNumber: 1,totalRecords: widget.totalRecords,);
-      }*/
-      print(article.length);
-    });
+    WidgetsFlutterBinding.ensureInitialized();
+    _result = await ShareService.islLogin();
+
+    print("YAPIIIIIIIII ${_result}");
   }
 
   @override
@@ -45,92 +50,182 @@ class _MenuDrawerState extends State<MenuDrawer> {
     final email = "hamed@gmail.com";
     final urlImage = "assets/images/img.jpg";
 
-    return Drawer(
-      child: Material(
-        color: Colors.black,
-        child: ListView(
-          //padding: padding,
-          children: [
-            buidlHeader(
-              urlImage:urlImage,
-              nom:nom,
-              email:email,
-              onClicked:()=>  Navigator.of(context).push(MaterialPageRoute(
-                builder:(context)=> UserProfile(
-                  nom:nom,
-                  urlImage:urlImage,
+    return  Obx((){
+      if(c.isLoading.value == true){
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      }else{
+        return  Drawer(
+          elevation: 15.0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              const SizedBox(
+                height: 120,
+                child: DrawerHeader(
+                  decoration: BoxDecoration(color: Colors.lime),
+                  child: Text('DIGITAL-MAG'),
                 ),
-              )),
-            ),
-            const Divider(color: Colors.white70,),
-            buildMenuItem(
-              text:"Abonnez-vous ici",
-              icon:Icons.unsubscribe,
-              onClicked: ()=>selectedItem(context,0),
-            ),
-            buildMenuItem(
-              text:"Historiques",
-              icon:Icons.history,
-              onClicked: ()=>selectedItem(context,1),
-            ),
-            buildMenuItem(
-              text:"Articles favories",
-              icon:Icons.favorite,
-              onClicked: ()=>selectedItem(context,2),
-            ),
-            buildMenuItem(
-              text:"Lire plus tard",
-              icon:Icons.book_rounded,
-              onClicked: ()=>selectedItem(context,3),
-            ),
-            const Divider(color: Colors.white70,),
-           // const SizedBox(height: 24,),
-            const SizedBox(height: 5,),
-            buildMenuItem(
-              text:"Actu-IT",//4
-              icon:Icons.new_releases,
-              onClicked: ()=>selectedItem(context,4),
-            ),
-            buildMenuItem(
-              text:"Decryptage",//11
-              icon:Icons.network_cell,
-              onClicked: ()=>selectedItem(context,5),
-            ),
-            buildMenuItem(
-              text:"Interviews",
-              icon:Icons.people,
-              onClicked: ()=>selectedItem(context,6),
-            ),
-            buildMenuItem(
-              text:"Plus",
-              icon:Icons.new_releases_sharp,
-              onClicked: ()=>selectedItem(context,7),
-            ),
+              ),
 
-            const Divider(color: Colors.white70,),
-            buildMenuItem(
-              text:"Parametres",
-              icon:Icons.settings,
-              onClicked: ()=>selectedItem(context,8),
-            ),
-            buildMenuItem(
-              text:"Partage",
-              icon:Icons.share,
-              onClicked: ()=>selectedItem(context,9),
-            ),
-            const Divider(color: Colors.white70,),
-            const SizedBox(height: 5,),
-            buildMenuItem(
-              text:"Se connecter",
-              icon:Icons.login_outlined,
-              onClicked: ()=>selectedItem(context,10),
-            ),
-            const Divider(color: Colors.white70,),
+              // buidlHeader(
+              //   urlImage:urlImage,
+              //   nom:nom,
+              //   email:email,
+              //   onClicked:()=>  Navigator.of(context).push(MaterialPageRoute(
+              //     builder:(context)=> UserProfile(
+              //       nom:nom,
+              //       urlImage:urlImage,
+              //     ),
+              //   )),
+              // ),
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [Colors.lime, Colors.purple])),
+                  child: ListView(
+                    //padding: padding,
+                    children: [
 
-          ],
-        ),
-      ),
-    );
+                      //const Divider(color: Colors.white70,),
+                      buildMenuItem(
+                        text:"Notre newsletter",
+                        icon:Icons.unsubscribe,
+                        onClicked: ()=>selectedItem(context,0),
+                      ),
+
+                       buildMenuItem(
+                        text: userLoginController.isTrue.value == true ? "Se deconnecter" : "Se connecter",
+                        icon: userLoginController.isTrue.value == true ? Icons.logout_rounded :Icons.login_rounded,
+                        onClicked: userLoginController.isTrue.value == true ? ()=>selectedItem(context,22):()=>selectedItem(context,10),
+                      ),
+
+                      Container(
+                        //padding: const EdgeInsets.all(1),
+                        //margin: const EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(2)
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 8),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text("PARAMETRES"
+                              ,style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold
+                              ),),
+                          ),
+                        ),
+                      ),
+                      buildMenuItem(
+                        text:"Historiques",
+                        icon:Icons.history,
+                        onClicked: ()=>selectedItem(context,1),
+                      ),
+                      buildMenuItem(
+                        text:"Articles favories",
+                        icon:Icons.favorite,
+                        onClicked: ()=>selectedItem(context,2),
+                      ),
+                      buildMenuItem(
+                        text:"Lire plus tard",
+                        icon:Icons.book_rounded,
+                        onClicked: ()=>selectedItem(context,3),
+                      ),
+                      Container(
+                        //padding: const EdgeInsets.all(1),
+                        //margin: const EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(2)
+                        ),
+                        child:const Padding(
+                          padding:  EdgeInsets.symmetric(horizontal: 20,vertical: 8),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text("RUBRIQUES"
+                              ,style:  TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold
+                              ),),
+                          ),
+                        ),
+                      ),
+                      const Divider(color: Colors.white70,),
+                      // const SizedBox(height: 24,),
+                      const SizedBox(height: 5,),
+                      buildMenuItem(
+                        text:"Actu-IT",//4
+                        icon:Icons.new_releases,
+                        onClicked: ()=>selectedItem(context,4),
+                      ),
+                      buildMenuItem(
+                        text:"Decryptage",//11
+                        icon:Icons.network_cell,
+                        onClicked: ()=>selectedItem(context,5),
+                      ),
+                      buildMenuItem(
+                        text:"Interviews",
+                        icon:Icons.people,
+                        onClicked: ()=>selectedItem(context,6),
+                      ),
+                      buildMenuItem(
+                        text:"Plus",
+                        icon:Icons.add_box,
+                        onClicked: ()=>selectedItem(context,7),
+                      ),
+                      Container(
+                        //padding: const EdgeInsets.all(1),
+                        //margin: const EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(2)
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 8),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text("A PROPOS DE NOUS"
+                              ,style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold
+                              ),),
+                          ),
+                        ),
+                      ),
+                      const Divider(color: Colors.white70,),
+                      buildMenuItem(
+                        text:"Aide",
+                        icon:Icons.settings,
+                        onClicked: ()=>selectedItem(context,8),
+                      ),
+                      buildMenuItem(
+                        text:"Partage",
+                        icon:Icons.share,
+                        onClicked: ()=>selectedItem(context,9),
+                      ),
+
+
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      }
+
+    });
+
   }
   Widget buidlHeader(
   {
@@ -160,12 +255,6 @@ class _MenuDrawerState extends State<MenuDrawer> {
               ),
             ],
           ),
-          Spacer(),
-          const CircleAvatar(
-            radius: 15,
-            backgroundColor: Color.fromRGBO(30,60,168,1),
-          child:  Icon(Icons.add_comment_outlined,color: Colors.white,),
-          )
 
         ],
       ),
@@ -190,6 +279,12 @@ class _MenuDrawerState extends State<MenuDrawer> {
 void selectedItem(BuildContext context, int index){
    Navigator.of(context).pop();//il permet de retourner sur la page anterieur
     switch(index){
+      case 0:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder:(context)=> const Newsletter(),
+        ));
+        break;
+
       case 4:
      /*   Navigator.pushNamed(context,
           ArticlesParCategorie.routeName,
@@ -205,10 +300,19 @@ void selectedItem(BuildContext context, int index){
         ));
         break;
 
-      case 5:
+      case 6:
         Navigator.of(context).push(MaterialPageRoute(
           builder:(context)=> const ArticlesParcategorie(isReload: true, categoryId: 12, totalRecords: 200,),
         ));
+        break;
+      case 10:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder:(context)=> const Login(),
+        ));
+        break;
+      case 22:
+        ShareService.logout();
+
         break;
       case 9:
             Share.share("https://www.digital-mag.ci/");

@@ -36,7 +36,7 @@ class _CarrousselSlideDataState extends State<CarrousselSlideData> {
             DetailsPage.routeName,
             arguments: e,
           );*/
-          Get.to(DetailsPage(category_id: e.id,));
+          Get.to(DetailsPage(post_id: e.id,));
         },
         child: ClipRRect(
 
@@ -82,12 +82,19 @@ class _CarrousselSlideDataState extends State<CarrousselSlideData> {
                            ),),
                        ),
                      ),
-                     Text(
-                       e.title.toString(),
-                       style: const TextStyle(
-                           color: Colors.red,
-                           fontSize: 11,
-                           fontWeight: FontWeight.bold
+
+                     Container(
+                       decoration: BoxDecoration(
+                           color: Colors.greenAccent.withOpacity(0.7)
+                         //borderRadius: BorderRadius.circular(15)
+                       ),
+                       child: Text(
+                         e.title.toString(),
+                         style: const TextStyle(
+                             color: Colors.white,
+                             fontSize: 13,
+                             fontWeight: FontWeight.bold
+                         ),
                        ),
                      ),
                     const SizedBox(height: 2,),
@@ -173,8 +180,8 @@ class _CarrousselSlideDataState extends State<CarrousselSlideData> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: _current == index
-                    ?  Color.fromRGBO(0, 0, 0, 0.9)
-                      :  Colors.purple
+                    ?  Colors.red
+                      :  Colors.white
                 ),
             );
             }).toList(),

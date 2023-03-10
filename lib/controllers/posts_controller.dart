@@ -1,11 +1,14 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:digital_mag/modeles/news_modele.dart';
 import 'package:digital_mag/services/api_service.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PostsController extends GetxController{
   var isLoading= true.obs;
+  var isTrue = false.obs;
   var postsList = <NewsModele>[].obs;
   var loveListe = <NewsModele>[].obs;
   var carousselData = <NewsModele>[].obs;
@@ -18,6 +21,7 @@ class PostsController extends GetxController{
   void onInit() {
     // TODO: implement onInit
    // fetchPosts2();
+    isTrues();
     fetchPosts();
     fetchCaroussel();
     fetchArticlerecents();
@@ -29,7 +33,16 @@ class PostsController extends GetxController{
     //print(carousselData);
     super.onInit();
   }
-  
+
+   Future<void> isTrues() async{
+    final prefs = await SharedPreferences.getInstance();
+    WidgetsFlutterBinding.ensureInitialized();
+   // _result = await ShareService.islLogin();
+     prefs.getString("login_detail") != null ? isTrue(true) : isTrue(false);
+
+  }
+
+
   Future<void> fetchPosts({int? categoryId = 4,int pageNumber = 0,int totalRecords = 0}) async{
     try{
      isLoading(true);

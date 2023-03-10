@@ -37,7 +37,7 @@ class _LoveArticleState extends State<LoveArticle> {
     return Container(color: Colors.grey,
     child: Obx((){
       if(categoriesController.isLoading.value) {
-        return  Center(
+        return  const Center(
           child: CircularProgressIndicator(),
         );
       } else {
@@ -68,6 +68,7 @@ class _LoveArticleState extends State<LoveArticle> {
             ],
           ),
           //bottomNavigationBar: const NavBar(index: 2),
+          //Je recharrche le bon
           body: TabBarView(
             children: categoriesController.categoriesList.map((model)
              {

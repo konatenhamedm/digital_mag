@@ -3,18 +3,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-List<NewsModele> postFromJson(String str)=>
-    List<NewsModele>.from(
+List<NotificationModele> notoificationFromJson(String str)=>
+    List<NotificationModele>.from(
       json.decode(str).map(
-            (x)=>NewsModele.fromJson(x),
+            (x)=>NotificationModele.fromJson(x),
       ),
     );
 
 
-NewsModele fromJsonToDetail(String str) => NewsModele.fromJson(json.decode(str));
+NotificationModele fromJsonToNotoification(String str) => NotificationModele.fromJson(json.decode(str));
 
 
-class NewsModele {
+class NotificationModele {
   int? id;
   String? title;
   String? imageUrl;
@@ -27,7 +27,7 @@ class NewsModele {
   String? url;
 
 
-  NewsModele( {
+  NotificationModele( {
     this.id,
     this.title,
     this.imageUrl,
@@ -40,9 +40,9 @@ class NewsModele {
     this.url,
   });
 
-  factory NewsModele.fromJson1(Map<String, dynamic> addjson){
+  factory NotificationModele.fromJson1(Map<String, dynamic> addjson){
 
-    return NewsModele(
+    return NotificationModele(
         id: addjson["id"],
         title:  addjson["title"],
         imageUrl: addjson["image_url"],
@@ -61,7 +61,7 @@ class NewsModele {
     );
   }
 
-  NewsModele.fromJson(Map<String,dynamic> json){
+  NotificationModele.fromJson(Map<String,dynamic> json){
     id= json['id'];
     title= json['title'];
     auteur= json['auteur'];

@@ -2,9 +2,12 @@ import 'dart:io';
 import 'package:digital_mag/vues/slide.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import 'home.dart';
 import 'home_vue.dart';
+import 'menu_drawer.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -19,8 +22,9 @@ class _SplashState extends State<Splash> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(const Duration(seconds: 5),(){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const Home(isReload: true,totalRecords: 20,)));
+    Future.delayed(const Duration(seconds: 10),(){
+      Get.to(Home(isReload: true, totalRecords: 15));
+      //Get.to(MenuDrawer());
     });
   }
   @override

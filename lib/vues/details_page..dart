@@ -13,8 +13,8 @@ import 'package:share/share.dart';
 import '../modeles/article.dart';
 
 class DetailsPage extends StatefulWidget {
-  final int? category_id;
-  DetailsPage({Key? key, required this.category_id}) : super(key: key);
+  final int? post_id;
+  DetailsPage({Key? key, required this.post_id}) : super(key: key);
   static const routeName ='/details';
 
   @override
@@ -31,7 +31,7 @@ class _DetailsPageState extends State<DetailsPage> {
     super.initState();
 
     Future.delayed(Duration.zero, () async {
-      var article = await detailsController.fetchDetails(postId: widget.category_id);
+      var article = await detailsController.fetchDetails(postId: widget.post_id);
 
     });
     // print(article);
@@ -150,6 +150,11 @@ class _DetailsPageState extends State<DetailsPage> {
             ),),
           ),
         ),
+        /*Text("leo messi",style:  TextStyle(
+          fontSize: 11,
+          color:  detailsController.dark.isFalse ? Colors.black : Colors.grey,
+          fontWeight: FontWeight.bold,
+        ),),*/
         Align(
           alignment: Alignment.topRight,
           child:  Row(
@@ -171,7 +176,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 onPressed: (){
                   detailsController.favoriteArticle();
                 },
-                icon:  Icon(detailsController.favorite.isFalse ? Icons.favorite_border : Icons.favorite,color: detailsController.favorite.isFalse ? Colors.white : Colors.red,),
+                icon:  Icon(detailsController.favorite.isFalse ? Icons.favorite_border : Icons.favorite,color: detailsController.favorite.isFalse ? Colors.black : Colors.red,),
 
               ),
               IconButton(

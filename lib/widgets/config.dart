@@ -1,5 +1,6 @@
 class Config{
-  static String? apiUrl= "https://digital-mag.ci/demo2023/wp-json/wp/v2/";
+  static String? api= "https://www.digital-mag.ci";
+  static String? apiUrl= "https://www.digital-mag.ci/wp-json/wp/v2/";
   static String? categorieUrl = 'categories';
   static String postUrl = 'latest-posts/?page_size=10&category_id=';
   static String postUrlByCat = 'latest-posts?category_id=';

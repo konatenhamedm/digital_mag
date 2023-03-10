@@ -14,12 +14,12 @@ class DetailsController extends GetxController{
   void onInit() {
     // TODO: implement onInit
     // fetchPosts2();
-    fetchDetails();
+    //fetchDetails();
 
     super.onInit();
     final box = GetStorage();
     dark(box.read("isDarkMode"));
-    favorite(box.read("favorite"));
+   // favorite(box.read("favorite"));
   }
 
   Future<void> fetchDetails({int? postId}) async{

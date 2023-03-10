@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:digital_mag/controllers/posts_controller.dart';
 import 'package:digital_mag/widgets/card_widget.dart';
 
+import '../news_card.dart';
 import 'article_categorie_vue.dart';
 
 class RecentsArticlesPage extends StatefulWidget {
@@ -69,12 +70,12 @@ class _RecentsArticlesPageState extends State<RecentsArticlesPage> {
             onRefresh: () =>  postsController.fetchArticlerecents(),
 
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 3),
               child: Column(
                 children: [
-                  const  SizedBox(height: 5,),
+                  const  SizedBox(height: 2,),
                   Container(
-                    //padding:  const EdgeInsets.symmetric(horizontal: 8),
+                    padding:  const EdgeInsets.symmetric(horizontal: 8),
 
                     child: Row(
                       children: const [
@@ -82,8 +83,8 @@ class _RecentsArticlesPageState extends State<RecentsArticlesPage> {
                           "Les articles recents ",
                           style:  TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                            color: Colors.purple,
+                            fontSize: 15,
+                            color: Colors.white,
                             //decoration: TextDecoration.underline,
                             //decorationStyle: TextDecorationStyle.double,
                           ),
@@ -99,17 +100,28 @@ class _RecentsArticlesPageState extends State<RecentsArticlesPage> {
                         physics: const ClampingScrollPhysics(),
                         itemBuilder: (context,index){
 
-                          return  BlocTileNewsModele(
+                          return NewsCard(
+                            image: "assets/images/Image_$index.png",
+                              arg: postsController.articleRecentData[index],
+                          ); /* BlocTileNewsModele(
                             imageUrl:  postsController.articleRecentData[index].imageUrlBool !=null && postsController.articleRecentData[index].imageUrlBool == false ?
                             postsController.articleRecentData[index].imageUrl.toString() : "https://lataule.com/wp-content/uploads/2017/11/fond-gris-moyen.jpg",
                             titre: postsController.articleRecentData[index].title.toString(),
                             desc: postsController.articleRecentData[index].title.toString(),
                             url: postsController.articleRecentData[index].imageUrl.toString(),
                             arg: postsController.articleRecentData[index],
-                          );
+                          );*/
                         }
 
                     ),
+                   /* ListView.separated(
+                      itemCount: 6,
+                      itemBuilder: (context, index) => NewsCard(
+                        image: "assets/images/Image_$index.png",
+                      ),
+                      separatorBuilder: (context, index) =>
+                      const SizedBox(height: 1),
+                    ),*/
                   ),
                 ],
                 // ],
