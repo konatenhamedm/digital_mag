@@ -185,7 +185,7 @@ class _InscriptionState extends State<Inscription> {
                 setState(() {
                   isApiCall = false;
                 });
-                if(response){
+                if(response?.statutCode == 200){
                   globalFormKey.currentState?.reset();
                   /*FormHelper.showMessage(
                        context, "Message", "valid",
@@ -197,7 +197,7 @@ class _InscriptionState extends State<Inscription> {
                   ));
                 }else{
                   FormHelper.showMessage(
-                      context, "Message", "Le nom utilisateur/mot de passe incorrect(s)",
+                      context, "Message", "${response?.message.toString()}",
                       "Quitter", (){
                     Navigator.of(context).pop();
                   }) ;                }

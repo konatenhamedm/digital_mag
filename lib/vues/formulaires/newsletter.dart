@@ -149,7 +149,7 @@ class _NewsletterState extends State<Newsletter> {
                   setState(() {
                     isApiCall = false;
                   });
-                 if(response){
+                 if(response?.message != null){
                    globalFormKey.currentState?.reset();
                    /*FormHelper.showMessage(
                        context, "Message", "valid",

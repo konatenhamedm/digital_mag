@@ -168,20 +168,19 @@ class _LoginState extends State<Login> {
                   setState(() {
                     isApiCall = false;
                   });
-                 if(response){
-                   globalFormKey.currentState?.reset();
-                   /*FormHelper.showMessage(
-                       context, "Message", "valid",
-                       "ok", (){
 
-                   }) ;*/
+                  print("JE VEUX VOIR LE CODE ####### ${response?.statutCode}");
+                 if(response?.statutCode == 200){
+                   globalFormKey.currentState?.reset();
+
                    Get.to(Splash());
                    /*Navigator.of(context).push(MaterialPageRoute(
                      builder:(context)=> const Splash(),
                    ));*/
-                 }else{
+                 }
+                 else{
                    FormHelper.showMessage(
-                       context, "Message", "Le nom utilisateur/mot de passe incorrect(s)",
+                       context, "Message", "${response?.message.toString()}",
                        "Quitter", (){
                      Navigator.of(context).pop();
                    }) ;                }

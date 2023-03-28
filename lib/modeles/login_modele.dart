@@ -3,6 +3,8 @@ import 'dart:convert';
 LoginResponseModel  loginResponseModelFromJson(Map<String, dynamic> json)=>
     LoginResponseModel.fromJson(json);
 
+LoginResponseModel  loginResponseModelFromJsonVide(Map<String, dynamic> json)=>
+    LoginResponseModel.fromJsonVide(json);
 
 
 class LoginResponseModel{
@@ -28,6 +30,13 @@ class LoginResponseModel{
     code = json['code'];
     message = json['message'];
     data = json['data'].length > 0 ? Data.fromJson(json['data']) : null;
+  }
+
+  LoginResponseModel.fromJsonVide(Map<String , dynamic> json){
+    success = json['success'];
+    statutCode = json['statutCode'];
+    code = json['code'];
+    message = json['message'];
   }
 
   Map<String ,dynamic> toJson(){

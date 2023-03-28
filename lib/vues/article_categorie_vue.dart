@@ -230,7 +230,7 @@ class BlocTileNewsModele extends StatelessWidget{
           DetailsPage.routeName,
           arguments: arg,
         );*/
-        Get.to(DetailsPage(post_id: arg.id,));
+       // Get.to(DetailsPage(post_id: arg.id,));
         print("hello konate");
         ///Navigator.push();
         //builder: (context)=>ArticleVues(blocUrl: url)));

@@ -9,6 +9,7 @@ class DetailsController extends GetxController{
   var isLoading = true.obs;
   var dark = false.obs;
   var favorite = false.obs;
+  var favorite1 = false.obs;
   var postModel = NewsModele().obs;
   @override
   void onInit() {
@@ -19,7 +20,10 @@ class DetailsController extends GetxController{
     super.onInit();
     final box = GetStorage();
     dark(box.read("isDarkMode"));
-   // favorite(box.read("favorite"));
+    //favorite(box.read("favorite"));
+    //favorite1(box.read("favorite1"));
+
+   /// print("VERRR ${postModel}");
   }
 
   Future<void> fetchDetails({int? postId}) async{
@@ -30,6 +34,7 @@ class DetailsController extends GetxController{
       if(postDetails != null){
 
         postModel.value = postDetails;
+        print("VERRR ${postModel.value}");
       }
     }finally{
       isLoading(false);
@@ -44,5 +49,10 @@ class DetailsController extends GetxController{
     favorite.toggle();
     final box = GetStorage();
     box.write("favorite", favorite.value);
+  }
+  void favoriteArticleRecents(){
+    favorite1.toggle();
+    final box = GetStorage();
+    box.write("favorite1", favorite1.value);
   }
 }

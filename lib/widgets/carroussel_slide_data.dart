@@ -36,7 +36,8 @@ class _CarrousselSlideDataState extends State<CarrousselSlideData> {
             DetailsPage.routeName,
             arguments: e,
           );*/
-          Get.to(DetailsPage(post_id: e.id,));
+          Get.to(DetailsPage(),arguments: e.id);
+          //Get.to(DetailsPage(post_id: e.id,));
         },
         child: ClipRRect(
 
@@ -65,35 +66,41 @@ class _CarrousselSlideDataState extends State<CarrousselSlideData> {
                    padding: const EdgeInsets.all(10),
                   child:   Column(
                    children : [
-                     Align(
-                       alignment: Alignment.topLeft,
-                       child: Container(
-                         padding: const EdgeInsets.all(7),
-                         margin: const EdgeInsets.all(10),
-                         decoration: BoxDecoration(
-                             color: Colors.green,
-                             borderRadius: BorderRadius.circular(15)
+                     Row(
+                       children: [
+                         Align(
+                           alignment: Alignment.topLeft,
+                           child: Container(
+                             padding: const EdgeInsets.all(7),
+                             margin: const EdgeInsets.all(10),
+                             decoration: BoxDecoration(
+                                 color: Colors.deepPurple,
+                                 borderRadius: BorderRadius.circular(15)
+                             ),
+                             child: Text(e.categoryName.toString()
+                               ,style: const TextStyle(
+                                   color: Colors.white,
+                                   fontSize: 5,
+                                   fontWeight: FontWeight.bold
+                               ),),
+                           ),
                          ),
-                         child: Text(e.categoryName.toString()
-                           ,style: const TextStyle(
-                               color: Colors.white,
-                               fontSize: 5,
-                               fontWeight: FontWeight.bold
-                           ),),
-                       ),
+
+
+                       ],
                      ),
 
                      Container(
                        decoration: BoxDecoration(
-                           color: Colors.greenAccent.withOpacity(0.7)
+                           color: Colors.transparent
                          //borderRadius: BorderRadius.circular(15)
                        ),
                        child: Text(
                          e.title.toString(),
                          style: const TextStyle(
-                             color: Colors.white,
-                             fontSize: 13,
-                             fontWeight: FontWeight.bold
+                             color: Colors.redAccent,
+                             fontSize: 15,
+                             fontWeight: FontWeight.w800
                          ),
                        ),
                      ),
@@ -109,7 +116,7 @@ class _CarrousselSlideDataState extends State<CarrousselSlideData> {
                                  color: Colors.grey,
                                  borderRadius: BorderRadius.circular(15)
                              ),
-                             child:  Text("Ecrit par : ${e.auteur.toString()}"
+                             child:  Text("publié il y a  ${DateTime.now().difference(DateFormat('dd-MMM-yyyy').parse(e.postedDate.toString())).inHours} heure(s)"
                                ,style:  const TextStyle(
                                  color: Colors.white,
                                  fontSize: 5,
@@ -117,7 +124,7 @@ class _CarrousselSlideDataState extends State<CarrousselSlideData> {
                                ),),
                            ),
                          ),
-                         const SizedBox(width: 1,),
+                         /*const SizedBox(width: 1,),
                          Align(
                            //alignment: Alignment.topLeft,
                            child: Container(
@@ -134,13 +141,33 @@ class _CarrousselSlideDataState extends State<CarrousselSlideData> {
 
                                ),),
                            ),
-                         ),
+                         ),*/
+
                        ],
                      )
+                     /*,Row(
+                       children: [
+                         Container(
+                           decoration: BoxDecoration(
+                               color: Colors.grey
+                             //borderRadius: BorderRadius.circular(15)
+                           ),
+                           child: Text(
+                             e.title.toString(),
+                             style: const TextStyle(
+                                 color: Colors.white,
+                                 fontSize: 13,
+                                 fontWeight: FontWeight.bold
+                             ),
+                           ),
+                         ),
+                       ],
+                     )*/
                    ]
                   )
                 ),
               )
+
             ],
           ),
         ),
@@ -185,7 +212,8 @@ class _CarrousselSlideDataState extends State<CarrousselSlideData> {
                 ),
             );
             }).toList(),
-          )
+          ),
+
         ],
       ),
     );

@@ -47,7 +47,8 @@ dependencies:
   shimmer: ^2.0.0
   carousel_slider: ^4.2.1
   get_storage:
-  flutter_html: ^0.8.2
+  #flutter_html: ^0.8.2
+  flutter_html: ^2.2.1
   snippet_coder_utils: ^1.0.13
   shared_preferences: ^2.0.18
   dio: ^5.0.1

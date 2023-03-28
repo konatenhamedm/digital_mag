@@ -15,14 +15,14 @@ import '../modeles/news_modele.dart';
 import '../services/share_service.dart';
 import 'ecrans_export.dart';
 
-class MenuDrawer extends StatefulWidget {
-  const MenuDrawer({Key? key}) : super(key: key);
+class ManuDrawerLogout extends StatefulWidget {
+  const ManuDrawerLogout({Key? key}) : super(key: key);
 
   @override
-  State<MenuDrawer> createState() => _MenuDrawerState();
+  State<ManuDrawerLogout> createState() => _ManuDrawerLogoutState();
 }
 
-class _MenuDrawerState extends State<MenuDrawer> {
+class _ManuDrawerLogoutState extends State<ManuDrawerLogout> {
   final padding = EdgeInsets.symmetric(horizontal: 20);
   final UserLoginController userLoginController = Get.put(UserLoginController());
   final PostsController c = Get.put(PostsController());
@@ -99,9 +99,9 @@ print(" DRAWWWWWW ${userLoginController.isTrue.value}");
                       ),
 
                        buildMenuItem(
-                        text: "Se deconnecter" ,
-                        icon: Icons.logout_rounded ,
-                        onClicked: ()=>selectedItem(context,22)
+                        text: "Se connecter",
+                        icon: Icons.login_rounded,
+                        onClicked: ()=>selectedItem(context,10),
                       ),
                       Container(
                         //padding: const EdgeInsets.all(1),
@@ -304,7 +304,11 @@ void selectedItem(BuildContext context, int index){
           builder:(context)=> const ArticlesParcategorie(isReload: true, categoryId: 12, totalRecords: 200,),
         ));
         break;
-
+      case 10:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder:(context)=> const Login(),
+        ));
+        break;
       case 22:
         ShareService.logout();
 

@@ -13,8 +13,8 @@ import 'package:share/share.dart';
 import '../modeles/article.dart';
 
 class DetailsPage extends StatefulWidget {
-  final int? post_id;
-  DetailsPage({Key? key, required this.post_id}) : super(key: key);
+  //final int? post_id;
+  DetailsPage({Key? key}) : super(key: key);
   static const routeName ='/details';
 
   @override
@@ -24,22 +24,13 @@ class DetailsPage extends StatefulWidget {
 class _DetailsPageState extends State<DetailsPage> {
   final DetailsController detailsController = Get.put(DetailsController());
 
-  NewsModele article = NewsModele();
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    Future.delayed(Duration.zero, () async {
-      var article = await detailsController.fetchDetails(postId: widget.post_id);
-
-    });
-    // print(article);
-  }
-
   @override
   Widget build(BuildContext context) {
-
+    //final article_verif = ModalRoute.of(context)!.settings.arguments as NewsModele;
+    Future.delayed(Duration.zero, () async {
+      await detailsController.fetchDetails(postId: Get.arguments);
+      print("GAGAGAGGAGA ${Get.arguments }${detailsController.isLoading.value}");
+    });
     return Scaffold(
       body: CustomScrollView(
         physics: const BouncingScrollPhysics()
@@ -83,7 +74,7 @@ class _DetailsPageState extends State<DetailsPage> {
       } else {
         return Image.network(
           detailsController.postModel.value.imageUrlBool !=null && detailsController.postModel.value.imageUrlBool == false ?
-            detailsController.postModel.value.imageUrl.toString() : "https://lataule.com/wp-content/uploads/2017/11/fond-gris-moyen.jpg"
+          detailsController.postModel.value.imageUrl.toString() : "https://lataule.com/wp-content/uploads/2017/11/fond-gris-moyen.jpg"
           ,
           fit: BoxFit.cover,
         );
@@ -98,7 +89,7 @@ class _DetailsPageState extends State<DetailsPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row1(article),
+          Row1(),
           Layout.iconText( Icon(Icons.timer,color: detailsController.dark.isFalse ? Colors.black : Colors.white,),Text(detailsController.postModel.value.postedDate.toString(),style: TextStyle(
             color: detailsController.dark.isFalse ? Colors.black : Colors.white,
           ),)),
@@ -114,15 +105,22 @@ class _DetailsPageState extends State<DetailsPage> {
             child:  Divider(color: Colors.grey,thickness: 2,),
             width: 100,),
           Expanded(
-            child: Html(
-                defaultTextStyle: TextStyle(
-                  fontSize: 15,
-                  color: detailsController.dark.isFalse ? Colors.black : Colors.grey,
-                ),
-                //ackgroundColor: ,
-                data: detailsController.postModel.value.postContent.toString()
+              child:    Html(
+                /*defaultTextStyle: TextStyle(
 
-            ),
+                        fontSize: 15,
+                        color: detailsController.dark.isFalse ? Colors.black : Colors.grey,
+                      ),*/
+
+                //ackgroundColor: ,
+                  data: detailsController.postModel.value.postContent.toString(),
+                style:{
+                    "p": Style(
+                      color: detailsController.dark.isFalse ? Colors.black : Colors.grey,
+                    )
+                }
+
+              ),
           )
         ],
       ),
@@ -130,7 +128,7 @@ class _DetailsPageState extends State<DetailsPage> {
     // );
   }
 
-  Widget Row1(NewsModele article){
+  Widget Row1(){
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

@@ -30,7 +30,8 @@ class CardWidget extends StatelessWidget {
             arguments: modele,
           );*/
         //  Get.to(() => Texte(),arguments:0 );
-          Get.to(DetailsPage(post_id: modele.id,));
+          Get.to(DetailsPage(),arguments: modele.id);
+          //Get.to(DetailsPage(post_id: modele.id,));
           //print("LEOOOOOOOO");
           //print(modele.id);
         },

@@ -11,7 +11,9 @@ List<NewsModele> postFromJson(String str)=>
     );
 
 
-NewsModele fromJsonToDetail(String str) => NewsModele.fromJson(json.decode(str));
+NewsModele fromJsonToDetail(String str) => NewsModele.fromJson( json.decode(str).map(
+      (x)=>NewsModele.fromJson(x),
+),);
 
 
 class NewsModele {

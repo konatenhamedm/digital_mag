@@ -27,14 +27,14 @@ class ApiService{
     }
   }
 
-  static Future<bool> inscription(String username,String password,String email) async{
+  static Future<LoginResponseModel?> inscription(String username,String password,String email) async{
 
     Map<String ,String> header = {
       'content-type':"multipart/form-data"
     };
 
     var req =  await (http.MultipartRequest("POST",
-        Uri.parse("https://digital-mag.ci/wp-json/add/v1/registerr_user")
+        Uri.parse(Config.api.toString() + Config.inscription.toString())
     ));
 
     req.headers.addAll(header);
@@ -46,37 +46,29 @@ class ApiService{
     });
 
     var response = await req.send();
-    //Map body = jsonDecode(await response.stream.bytesToString());
 
-    // print("==========================${body}");
-
-    //if(body.statusCode == 200){
     Map body = jsonDecode(await response.stream.bytesToString());
     print(body.toString());
+
     if(body['statutCode'] == 200){
-      // Map body = jsonDecode(await response.stream.bytesToString());
-      // var jsonString = response.body;
+
       LoginResponseModel responseModel = loginResponseModelFromJson(body as Map<String, dynamic>);
-      print("================== ${responseModel.statutCode}");
-      if(responseModel.statutCode == 200){
-        ShareService.setLoginDetails(responseModel);
-      }
-      print("==========================${responseModel}");
-      return responseModel.statutCode == 200 ? true:false;
+
+      return responseModel;
+    }else{
+      LoginResponseModel responseModel = loginResponseModelFromJsonVide(body as Map<String, dynamic>);
+      return responseModel;
     }
-
-
-    return false;
   }
 
-  static Future<bool> login(String username,String password) async{
+  static Future<LoginResponseModel?> login(String username,String password) async{
 
     Map<String ,String> header = {
       'content-type':"multipart/form-data"
     };
 
     var req =  await (http.MultipartRequest("POST",
-        Uri.parse("https://digital-mag.ci/wp-json/add/v1/restUserLogins")
+        Uri.parse(Config.api.toString() + Config.login.toString())
     ));
 
     req.headers.addAll(header);
@@ -86,27 +78,24 @@ class ApiService{
     });
 
     var response = await req.send();
-    //Map body = jsonDecode(await response.stream.bytesToString());
 
-    // print("==========================${body}");
-
-    //if(body.statusCode == 200){
     Map body = jsonDecode(await response.stream.bytesToString());
-    print(body.toString());
+
     if(body['statutCode'] == 200){
-     // Map body = jsonDecode(await response.stream.bytesToString());
-     // var jsonString = response.body;
+
       LoginResponseModel responseModel = loginResponseModelFromJson(body as Map<String, dynamic>);
-      print("================== ${responseModel.statutCode}");
+
       if(responseModel.statutCode == 200){
         ShareService.setLoginDetails(responseModel);
       }
-      print("==========================${responseModel}");
-      return responseModel.statutCode == 200 ? true:false;
+
+      return responseModel;
+    }else{
+      LoginResponseModel responseModel = loginResponseModelFromJsonVide(body as Map<String, dynamic>);
+      return responseModel;
     }
 
 
-    return false;
   }
   
   static Future<List<CategorieModele>?> fetchCategories() async {
@@ -228,12 +217,14 @@ class ApiService{
 
 
     static Future<NewsModele?> fetchDetails(int postId) async{
+    //var postId = 9422;
       var url =Config.apiUrl.toString() + Config.postDetailUrl + postId.toString();
       var response = await client.get(Uri.parse(url));
 
       if(response.statusCode == 200){
         var jsonString = response.body ;
         //print(fromJsonToDetail(jsonString));
+        print("98888888888888888888888888888888888 ${jsonString}");
         return fromJsonToDetail(jsonString);
 
 
