@@ -27,11 +27,11 @@ class ShareService{
     ):null;
   }
 
-  static Future<void> setLoginDetails (LoginResponseModel ? responseModel) async{
+  static Future<void> setLoginDetails (LoginResponseModel  responseModel) async{
    final prefs = await SharedPreferences.getInstance();
    //prefs.setString("login_detail", "konatehamed@gmail.com");
-     prefs.getString("login_detail") == null ? prefs.setString("login_detail", jsonEncode(responseModel?.toJson())) : null ;
-
+     prefs.getString("login_detail") == null ? prefs.setString("login_detail", jsonEncode(responseModel.toJson())) : null ;
+     prefs.setString("id",responseModel.data?.id as String);
    /* SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("user", jsonEncode(token));*/
 

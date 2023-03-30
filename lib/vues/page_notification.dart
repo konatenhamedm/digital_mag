@@ -88,10 +88,10 @@ ScrollController _scrollController = new ScrollController();
                       //visualDensity: VisualDensity(vertical: 4),
                       leading: CircleAvatar(
                         backgroundColor: const Color(0xff764abc),
-                        child: Text(notificationController.notificationList[index].auteur.toString().substring(0,1)),
+                        child: Text(notificationController.notificationList[index].title.toString().substring(0,1)),
                       ),
-                      title: Text('Item ${notificationController.notificationList[index].auteur}'),
-                      subtitle: Text(notificationController.notificationList[index].title.toString()),
+                      title: Text('${notificationController.notificationList[index].title}'),
+                      subtitle: Text(notificationController.notificationList[index].content.toString()),
                       trailing: Icon(Icons.arrow_back),
                     ),
                   ),

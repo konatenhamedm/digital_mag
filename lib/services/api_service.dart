@@ -62,7 +62,7 @@ class ApiService{
   }
 
   static Future<LoginResponseModel?> login(String username,String password) async{
-
+    final prefs = await SharedPreferences.getInstance();
     Map<String ,String> header = {
       'content-type':"multipart/form-data"
     };
@@ -87,6 +87,7 @@ class ApiService{
 
       if(responseModel.statutCode == 200){
         ShareService.setLoginDetails(responseModel);
+
       }
 
       return responseModel;
@@ -200,18 +201,18 @@ class ApiService{
   }
 
   static Future<List<NotificationModele>?> fetchNotification() async {
-    var url =Config.apiUrl.toString() + Config.postUrlRecents.toString();
+    var url ='https://127.0.0.1:8000/api/notification/31/liste';
     var response = await client.get(Uri.parse(url));
 
-    if(response.statusCode == 200){
+   /* if(response.statusCode == 200){*/
       var jsonString = response.body;
       // tableau de id des post
       // ensuite j'envoi ça
 
       return notoificationFromJson(jsonString);
-    }else{
+   /* }else{
       return null;
-    }
+    }*/
 
   }
 

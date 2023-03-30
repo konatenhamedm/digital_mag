@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controllers/notification_controller.dart';
 import '../controllers/posts_controller.dart';
+import '../modeles/login_modele.dart';
 import '../services/share_service.dart';
 import '../widgets/carroussel_loading.dart';
 import '../widgets/carroussel_slide_data.dart';
@@ -56,14 +57,17 @@ class _HomeState extends State<Home> {
 
 
   getArticles() async{
+    final prefs = await SharedPreferences.getInstance();
     News news = News();
     await news.getArticle();
+     //var element = await ShareService.setLoginDetails();
     WidgetsFlutterBinding.ensureInitialized();
      _result = await ShareService.islLogin();
     setState(() {
       _loading = false;
     });
 print("YAPIIIIIIIII ${_result}");
+print("YAPIIIIIIIII ${prefs.getString("id")}");
   }
 
 
