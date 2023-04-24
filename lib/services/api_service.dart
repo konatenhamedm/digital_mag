@@ -200,12 +200,13 @@ class ApiService{
 
   }
 
-  static Future<List<NotificationModele>?> fetchNotification() async {
-    var url ='https://127.0.0.1:8000/api/notification/31/liste';
+  static Future<List<NotificationModele>?> fetchNotification(int userId) async {
+    var url =Config.apiSymfony.toString() + Config.listeNotification.toString() + userId.toString();
     var response = await client.get(Uri.parse(url));
 
    /* if(response.statusCode == 200){*/
       var jsonString = response.body;
+      print("LEOOOOOOO ${jsonString}");
       // tableau de id des post
       // ensuite j'envoi ça
 

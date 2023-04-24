@@ -17,7 +17,7 @@ class NotificationController extends GetxController{
   Future<void> fetchNotification() async{
     try{
       isLoading(true);
-      var notifications = await ApiService.fetchNotification();
+      var notifications = await ApiService.fetchNotification(1);
       notificationList.clear();
       //articleRecentData.clear();
 

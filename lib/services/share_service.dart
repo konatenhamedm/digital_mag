@@ -31,7 +31,7 @@ class ShareService{
    final prefs = await SharedPreferences.getInstance();
    //prefs.setString("login_detail", "konatehamed@gmail.com");
      prefs.getString("login_detail") == null ? prefs.setString("login_detail", jsonEncode(responseModel.toJson())) : null ;
-     prefs.setString("id",responseModel.data?.id as String);
+     prefs.setString("id", jsonEncode(responseModel.toJson()));
    /* SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("user", jsonEncode(token));*/
 

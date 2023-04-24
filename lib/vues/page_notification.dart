@@ -17,7 +17,7 @@ class _PageNotificationState extends State<PageNotification>{
 
 final NotificationController notificationController = Get.put(NotificationController());
 var refreshKey = GlobalKey<RefreshIndicatorState>();
-ScrollController _scrollController = new ScrollController();
+
 
 @override
   void initState() {

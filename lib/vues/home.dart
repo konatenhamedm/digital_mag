@@ -127,7 +127,7 @@ print("YAPIIIIIIIII ${prefs.getString("id")}");
                        ),
                        child:  Text(
                          //'2',
-                         (userLoginController.isTrue.value == true || _result == true)? '${notificationController.notificationList.length}':"0",
+                         (userLoginController.isTrue.value == true || _result == true)? '${notificationController.notificationList.where((p0) => p0.etat==false).length}':"0",
                          style: const TextStyle(
                            color: Colors.white,
                            fontSize: 8,

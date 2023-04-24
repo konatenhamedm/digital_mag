@@ -1,6 +1,6 @@
 class Config{
   static String? api= "https://www.digital-mag.ci";
-  static String? apiSymfony= "http://127.0.0.1:8000/";
+  static String? apiSymfony= "http://panel.digital-mag.ci";
   static String? apiUrl= "https://www.digital-mag.ci/wp-json/wp/v2/";
   static String? categorieUrl = 'categories';
   static String postUrl = 'latest-posts/?page_size=10&category_id=';
@@ -11,6 +11,8 @@ class Config{
   static String dateFormat = "dd-MM-yyyy";
   static String login = "/wp-json/add/v1/restUserLogins";
   static String inscription = "/wp-json/add/v1/registerr_user";
+  static String listeNotification = "/api/notification/liste/";
+  static String changeStatutNotification = "/api/notification/changeStatus";
 
 
 }
